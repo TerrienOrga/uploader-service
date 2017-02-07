@@ -1,0 +1,7 @@
+logging:
+  level:
+    org.springframework.web: WARN
+    com.ote.test: INFO
+
+spring:
+  application.name: ${project.artifactId}
