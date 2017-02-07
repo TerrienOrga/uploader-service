@@ -34,6 +34,13 @@ public class FileControllerTest {
     }
 
     @Test
+    public void fileControllerShouldBePinged() throws Exception {
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/file/ping")).andReturn();
+        Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
     public void sampleFileShouldBePersisted() throws Exception {
 
         String sampleFile = "test-upload-1.txt";

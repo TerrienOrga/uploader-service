@@ -22,15 +22,15 @@ public class FileController {
     @Autowired
     private IFileIntegrationService fileIntegrationService;
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value = "/ping", method = RequestMethod.GET)
     public ResponseEntity test() {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity upload(@RequestParam(value = "file") MultipartFile file) {
 
-        if (file == null){
+        if (file == null) {
             log.error("Incoming file should not be null");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
