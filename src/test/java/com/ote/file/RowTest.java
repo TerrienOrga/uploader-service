@@ -19,7 +19,7 @@ public class RowTest {
     public IFileIntegrationService fileIntegrationService(){
         return new IFileIntegrationService() {
             @Override
-            public void persist(String fileName, Row row) {
+            public void persist(Row row) {
 
             }
         };

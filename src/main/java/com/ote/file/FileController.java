@@ -22,11 +22,6 @@ public class FileController {
     @Autowired
     private IFileIntegrationService fileIntegrationService;
 
-    @RequestMapping(value = "/ping", method = RequestMethod.GET)
-    public ResponseEntity test() {
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity upload(@RequestParam(value = "file") MultipartFile file) {
 
@@ -40,7 +35,8 @@ public class FileController {
             String fileName = file.getOriginalFilename();
             log.debug(String.format("New file %s incoming", fileName));
             try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-                fileIntegrationService.persist(fileName, fileReader);
+                fileIntegrationService.persist(fileReader);
+                log.debug(String.format("File %s has been saved in database", fileName));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

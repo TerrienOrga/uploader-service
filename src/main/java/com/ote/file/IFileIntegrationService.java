@@ -8,25 +8,26 @@ public interface IFileIntegrationService {
 
     Pattern ROW_PATTERN = Pattern.compile("(.*) (.*) (\\d+)");
 
-    default void persist(String fileName, BufferedReader fileReader) {
+    default void persist(BufferedReader fileReader) {
         fileReader.
                 lines().
                 parallel().
                 map(this::toRow).
-                forEach(p -> persist(fileName, p));
+                forEach(this::persist);
     }
 
     default Row toRow(String line) {
-        Row.RowBuilder row = Row.builder();
+
+        Row row = new Row();
+
         Matcher matcher = ROW_PATTERN.matcher(line);
         if (matcher.find()) {
-            row.
-                    nodeLeft(matcher.group(1)).
-                    nodeRight(matcher.group(2)).
-                    distance(Integer.parseInt(matcher.group(3)));
+            row.setNodeLeft(matcher.group(1));
+            row.setNodeRight(matcher.group(2));
+            row.setDistance(Integer.parseInt(matcher.group(3)));
         }
-        return row.build();
+        return row;
     }
 
-    void persist(String fileName, Row row);
+    void persist(Row row);
 }

@@ -5,3 +5,16 @@ logging:
 
 spring:
   application.name: ${project.artifactId}
+  datasource:
+    url: jdbc:postgresql://db:5432/postgres
+    username: postgres
+    password:
+    driverClassName: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    ddl-auto: create-drop
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
