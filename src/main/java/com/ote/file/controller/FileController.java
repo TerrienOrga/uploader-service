@@ -1,21 +1,19 @@
-package com.ote.file;
+package com.ote.file.controller;
 
+import com.ote.file.service.IFileIntegrationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 @RestController
-@RequestMapping("/file")
+@RequestMapping("/files")
 @Slf4j
 public class FileController {
 
@@ -26,17 +24,17 @@ public class FileController {
     public ResponseEntity upload(@RequestParam(value = "file") MultipartFile file) {
 
         if (file == null) {
-            log.error("Incoming file should not be null");
+            log.error("Incoming files should not be null");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         try {
-            // Get the filename and build the local file path
+            // Get the filename and build the local files path
             String fileName = file.getOriginalFilename();
-            log.debug(String.format("New file %s incoming", fileName));
+            log.debug(String.format("New files %s incoming", fileName));
             try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-                fileIntegrationService.persist(fileReader);
-                log.debug(String.format("File %s has been saved in database", fileName));
+                long count = fileIntegrationService.persist(fileReader);
+                log.debug(String.format("File %s has been saved in database. Count of rows: %d", fileName, count));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

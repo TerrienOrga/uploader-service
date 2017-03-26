@@ -1,20 +1,29 @@
+server:
+  port: ${port:8080}
+
 logging:
   level:
     org.springframework.web: WARN
-    com.ote.test: INFO
+    com.ote: TRACE
 
 spring:
   application.name: ${project.artifactId}
   datasource:
-    url: jdbc:postgresql://db:5432/postgres
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password:
+    password: password
     driverClassName: org.postgresql.Driver
+    initialize: false
   jpa:
-    show-sql: true
-    generate-ddl: true
-    ddl-auto: create-drop
+    show-sql: false
+    generate-ddl: false
+    ddl-auto: none
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+

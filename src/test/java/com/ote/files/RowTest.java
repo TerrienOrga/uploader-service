@@ -1,5 +1,7 @@
-package com.ote.file;
+package com.ote.files;
 
+import com.ote.file.service.IFileIntegrationService;
+import com.ote.row.model.Row;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +21,17 @@ public class RowTest {
     public IFileIntegrationService fileIntegrationService(){
         return new IFileIntegrationService() {
             @Override
-            public void persist(Row row) {
+            public void save(Row row) {
+            }
 
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public long count() {
+                return 0;
             }
         };
     }

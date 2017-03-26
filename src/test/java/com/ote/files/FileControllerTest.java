@@ -1,4 +1,4 @@
-package com.ote.file;
+package com.ote.files;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class FileControllerTest {
     @Test
     public void fileControllerShouldBePinged() throws Exception {
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/file/ping")).andReturn();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/files/ping")).andReturn();
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
@@ -47,9 +47,9 @@ public class FileControllerTest {
 
         try (InputStream sampleFileInputStream = this.getClass().getResourceAsStream(sampleFile)) {
 
-            MockMultipartFile file = new MockMultipartFile("file", sampleFile, null, sampleFileInputStream);
+            MockMultipartFile file = new MockMultipartFile("files", sampleFile, null, sampleFileInputStream);
 
-            MvcResult result = mockMvc.perform(MockMvcRequestBuilders.fileUpload("/file/upload").
+            MvcResult result = mockMvc.perform(MockMvcRequestBuilders.fileUpload("/files/upload").
                     file(file)).andReturn();
 
             Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
